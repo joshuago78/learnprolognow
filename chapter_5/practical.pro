@@ -52,15 +52,6 @@ scalarMult(Int, [H1|T1], [H2|T2]) :-
 %
 %   Result  =  32
 
-dot_mult([],[],[]).
-dot_mult([H1|T1], [H2|T2], [H3|T3]) :-
-  H3 is H1 * H2,
-  dot_mult(T1, T2, T3).
-
-dot_sum([],Sum,Sum).
-dot_sum([Head|Tail], Acc, Sum) :-
-  Temp is Head + Acc,
-  dot_sum(Tail, Temp, Sum).
 
 dot_help([],[],Res,Res).
 dot_help([H1|T1], [H2|T2], Acc, Result) :-
@@ -70,6 +61,3 @@ dot_help([H1|T1], [H2|T2], Acc, Result) :-
 
 dot(L1, L2, Sum) :-
   dot_help(L1, L2, 0, Sum).
-
-%  dot_mult(L1,L2, Mults),
-%  dot_sum(Mults, 0, Sum).
