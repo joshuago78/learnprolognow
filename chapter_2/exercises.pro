@@ -4,7 +4,7 @@
 % 
 % They are to be arranged, crossword puzzle fashion, in the following grid:
 % 
-% (see grid at http://www.learnprolognow.org/lpnpage.php?pagetype=html&pageid=lpn-htmlse7)
+% seehttp://www.learnprolognow.org/lpnpage.php?pagetype=html&pageid=lpn-htmlse7
 % 
 % The following knowledge base represents a lexicon containing these words:
 % 
@@ -15,7 +15,9 @@
 %    word(pistola,  p,i,s,t,o,l,a). 
 %    word(statale,  s,t,a,t,a,l,e).
 % 
-% Write a predicate crossword/6 that tells us how to fill in the grid. The first three arguments should be the vertical words from left to right, and the last three arguments the horizontal words from top to bottom.
+% Write a predicate crossword/6 that tells us how to fill in the grid. The 
+% first three arguments should be the vertical words from left to right, and
+% the last three arguments the horizontal words from top to bottom.
 
 
 word(astante,  a,s,t,a,n,t,e). 
@@ -34,7 +36,13 @@ crossword(H1, H2, H3, V1, V2, V3) :-
   word(V2, _,TopMid,_,Center,_,BottomMid,_),
   word(V3, _,TopRight,_,MidRight,_,BottomRight,_).
 
-% Note that the above code is not perfect as it does not tell prolog that it cannot use the same word twice. Thus you will get multiple solutions. As the tutorial had not specified how to do such, I assume this is the solution they were looking for. After learning more about list processing and negation in later chapters I came back and redid this exercise. Below is the improved code. It actually has two answers; the second is just the quarter-clockwise rotation of the first.
+% Note that the above code is not perfect as it does not tell prolog that it 
+% cannot use the same word twice. Thus you will get multiple solutions. As the
+% tutorial had not specified how to do such, I assume this is the solution they
+% were looking for. After learning more about list processing and negation in
+% later chapters I came back and redid this exercise. Below is the improved
+% code. It actually has two answers; the second is just the quarter-clockwise
+% rotation of the first.
 
 allUnique([_]).
 allUnique([Head|Tail]) :-
