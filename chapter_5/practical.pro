@@ -62,6 +62,14 @@ dot_sum([Head|Tail], Acc, Sum) :-
   Temp is Head + Acc,
   dot_sum(Tail, Temp, Sum).
 
+dot_help([],[],Res,Res).
+dot_help([H1|T1], [H2|T2], Acc, Result) :-
+  Prod is H1 * H2,
+  Sum is Acc + Prod,
+  dot_help(T1,T2,Sum,Result).
+
 dot(L1, L2, Sum) :-
-  dot_mult(L1,L2, Mults),
-  dot_sum(Mults, 0, Sum).
+  dot_help(L1, L2, 0, Sum).
+
+%  dot_mult(L1,L2, Mults),
+%  dot_sum(Mults, 0, Sum).
