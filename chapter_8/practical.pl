@@ -5,17 +5,17 @@
 % distinction. Write a DCG which handles both. Moreover, write the DCG in such
 % a way that it will produce parse trees, and makes use of a separate lexicon.
 
-s --> np(subject, GramNum),vp(GramNum).
+s(s(NP,VP)) --> np(NP, subject, GramNum),vp(VP, GramNum).
 
-np(_, Gnum)  -->  det(Gnum),n(Gnum). 
-np(X, Gnum) --> [Word],{lex(Word,pro(X),Gnum)}.
+np(np(DET,N),_, Gnum)  -->  det(DET, Gnum),n(N, Gnum). 
+np(np(Word), X, Gnum) --> [Word],{lex(Word,pro(X),Gnum)}.
 
-vp(Gnum)  -->  v(Gnum),np(object,_). 
-vp(Gnum)  -->  v(Gnum). 
+vp(vp(V,NP), Gnum)  -->  v(V, Gnum),np(NP,object,_). 
+vp(vp(V), Gnum)  -->  v(V, Gnum). 
 
-det(Gnum)  -->  [Word],{lex(Word,det,Gnum)}. 
-n(Gnum)  -->  [Word],{lex(Word,n,Gnum)}. 
-v(Gnum)  -->  [Word],{lex(Word,v,Gnum)}.
+det(det(Word), Gnum)  -->  [Word],{lex(Word,det,Gnum)}. 
+n(noun(Word), Gnum)  -->  [Word],{lex(Word,n,Gnum)}. 
+v(verb(Word), Gnum)  -->  [Word],{lex(Word,v,Gnum)}.
 
 % lexicon data structure
 % lex(word,
