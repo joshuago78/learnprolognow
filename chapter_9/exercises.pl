@@ -51,9 +51,38 @@ simple_term(Term) :-
   var(Term).
 
 complex_term(Term) :-
+  nonvar(Term),
   functor(Term,_,Arrity),
   Arrity > 0.
 
 term(Term) :-
   simple_term(Term);
   complex_term(Term).
+
+
+
+
+% Exercise  9.4
+% Write a Prolog program that defines the predicate groundterm(Term) which
+% tests whether or not Term is a ground term. Ground terms are terms that
+% don’t contain variables. Here are examples of how the predicate should
+% behave:
+%
+%   ?-  groundterm(X). 
+%   no 
+%   ?-  groundterm(french(bic_mac,le_bic_mac)). 
+%   yes 
+%  ?-  groundterm(french(whopper,X)). 
+%   no
+
+
+groundterm(Term) :-
+  atomic(Term).
+groundterm(Term) :-
+  complex_term(Term),
+  Term =.. [_|Args],
+  groundtermargs(Args).
+groundtermargs([H|T]) :-
+  groundterm(H),
+  ( T = []; groundtermargs(T) ).
+
