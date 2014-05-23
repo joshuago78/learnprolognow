@@ -65,3 +65,38 @@ split([Head|Tail], Pos, [Head|Neg]) :-
 %   Route  =  [forbach,freyming,stAvold,fahlquemont,metz]
 
 
+direct(X,Y) :-
+  directTrain(X,Y);
+  directTrain(Y,X).
+
+route_help(From, To, History, [To, From|History]) :-
+  direct(From, To),!.
+route_help(From, To, History, Rev) :-
+  direct(From, Next),
+  \+ member(Next, History),
+  route_help(Next, To, [From|History], Rev).
+
+route(From, To, Route) :-
+  route_help(From, To, [], Rev),
+  reverse(Rev, Route).
+
+
+
+
+% Exercise  10.5
+% Recall the definition of jealousy given in Chapter   1 .
+%
+%   jealous(X,Y):-  loves(X,Z),  loves(Y,Z).
+%
+% In a world where both Vincent and Marsellus love Mia, Vincent will be
+% jealous of Marsellus, and Marsellus of Vincent. But Marsellus will also be
+% jealous of himself, and so will Vincent. Revise the Prolog definition of
+% jealousy in such a way that people can’t be jealous of themselves.
+
+loves(vincent, mia).
+loves(marsellus, mia).
+
+jealous(X,X) :- !,fail.
+jealous(X,Y) :-
+  loves(X,Z),
+  loves(Y,Z).
