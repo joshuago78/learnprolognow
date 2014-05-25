@@ -44,3 +44,26 @@ cut(X, [H|T], [H|Subset]) :-
 subset2([], []).
 subset2(Subset, [_|Set]) :- subset2(Subset, Set).
 subset2([H|Subset], [H|Set]) :- subset2(Subset, Set).
+
+
+
+
+% 2. Using the subset predicate you have just written, and findall/3 , write a
+% predicate powerset/2 that takes a set as its first argument, and returns the
+% powerset of this set as the second argument. (The powerset of a set is the
+% set of all its subsets.) For example:
+
+%   ?-  powerset([a,b,c],P)
+
+% should return
+
+%   P  =  [[],[a],[b],[c],[a,b],[a,c],[b,c],[a,b,c]]
+
+% It doesn.t matter if the sets are returned in some other order. For example,
+
+%   P  =  [[a],[b],[c],[a,b,c],[],[a,b],[a,c],[b,c]]
+
+% is fine too.
+
+powerset(Set, Power) :-
+  findall(Subset, subset(Subset, Set), Power).
