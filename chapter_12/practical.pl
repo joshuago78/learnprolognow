@@ -27,3 +27,11 @@
 % session was done with SWI-Prolog.
 
 :- use_module(step1).
+
+
+% Step 2
+
+% In the practical session of Chapter  9 , you had to write a program for
+% pretty printing parse trees onto the screen. Turn that into a module as well.
+
+:- use_module(step2).
