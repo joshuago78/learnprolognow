@@ -44,8 +44,19 @@
 % predicate taking the Prolog representation of a parse tree and a stream as
 % arguments.
 
-test:-
-  open('test.txt', write, Stream),
-  s(Tree, [the,big,fat,man,shoots,the,frightened,cow,on,the,table],[]),
-  pptree(Stream, Tree),
+
+% Step 4
+
+% Import both modules into a file and define a two-place predicate test which
+% takes a list representing a sentence (such as [a,woman,shoots] ), parses it,
+% and writes the result to the file specified by the second argument of test .
+% Check that everything is working as it should.
+
+% test sentence [the,big,fat,man,shoots,the,frightened,cow,on,the,table]
+
+test(Sentence, Filename) :-
+  open(Filename, write, Stream),
+  s(Tree, Sentence, []),
+  pptree(Stream, Tree), !,
   close(Stream).
+
