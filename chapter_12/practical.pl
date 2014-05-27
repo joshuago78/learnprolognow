@@ -26,7 +26,7 @@
 % However, it does not support the use_module/1 predicate, so this practical
 % session was done with SWI-Prolog.
 
-:- use_module(step1).
+:- use_module(s).
 
 
 % Step 2
@@ -34,4 +34,18 @@
 % In the practical session of Chapter  9 , you had to write a program for
 % pretty printing parse trees onto the screen. Turn that into a module as well.
 
-:- use_module(step2).
+:- use_module(pptree).
+
+
+% Step 3
+
+% Now modify the program so that it prints the tree not to the screen but to a
+% given stream. That means that the predicate pptree should now be a two-place
+% predicate taking the Prolog representation of a parse tree and a stream as
+% arguments.
+
+test:-
+  open('test.txt', write, Stream),
+  s(Tree, [the,big,fat,man,shoots,the,frightened,cow,on,the,table],[]),
+  pptree(Stream, Tree),
+  close(Stream).

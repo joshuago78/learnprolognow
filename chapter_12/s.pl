@@ -5,7 +5,7 @@
 % lets you parse sentences and returns the parse tree as its first argument.
 
 
-:- module(step1, [s/3]).
+:- module(s, [s/3]).
 
 s(s(NP,VP)) --> np(NP, subject, GramNum),vp(VP, GramNum).
 
