@@ -54,9 +54,65 @@
 
 % test sentence [the,big,fat,man,shoots,the,frightened,cow,on,the,table]
 
-test(Sentence, Filename) :-
+step4test(Sentence, Filename) :-
   open(Filename, write, Stream),
   s(Tree, Sentence, []),
   pptree(Stream, Tree), !,
   close(Stream).
 
+
+% Step 5
+
+% Finally, modify test/2 , so that it takes a filename instead of a sentence
+% as its first argument, reads in the sentences given in the file one by one,
+% parses them, and writes the sentence as well as the parsing result into the
+% output file. For example, if your input file looked like this:
+
+%   [the,cow,under,the,table,shoots]. 
+    
+%   [a,dead,woman,likes,he].
+
+% the output file should look something like this:
+
+%   [the,  cow,  under,  the,  table,  shoots] 
+    
+%         s( 
+%               np( 
+%                     det(the) 
+%                     nbar( 
+%                           n(cow)) 
+%                     pp( 
+%                           prep(under) 
+%                           np( 
+%                                 det(the) 
+%                                 nbar( 
+%                                       n(table))))) 
+%               vp( 
+%                     v(shoots))) 
+    
+    
+%   [a,  dead,  woman,  likes,  he] 
+    
+%   no
+
+
+test(InFile, OutFile) :-
+  open(InFile, read, InStream),
+  open(OutFile, write, OutStream),
+  process(InStream, OutStream),
+  close(InStream),
+  close(OutStream).
+
+process(InStream, _) :-
+  at_end_of_stream(InStream), !.
+process(InStream, OutStream) :-
+  read(InStream, Sentence),
+  write(OutStream, Sentence), nl(OutStream), nl(OutStream),
+  parse(Sentence, OutStream),
+  process(InStream, OutStream).
+
+parse(Sentence, OutStream) :-
+  s(Tree, Sentence, []), !,  
+  pptree(OutStream, Tree), !, nl(OutStream).
+parse(_, OutStream) :-
+  write(OutStream, 'no'), nl(OutStream).

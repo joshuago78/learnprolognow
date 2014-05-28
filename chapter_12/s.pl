@@ -40,7 +40,8 @@ lex(woman,n,singular).
 lex(women,n,plural).
 lex(man,n,singular).
 lex(men,n,plural).
-lex(cow,n,plural).
+lex(cow,n,singular).
+lex(cows,n,plural).
 lex(table,n,plural).
 lex(shoots,v,singular).
 lex(shoot,v,plural).
