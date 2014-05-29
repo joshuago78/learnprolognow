@@ -33,7 +33,6 @@ ppbranch(Tree, Depth, Arrity, Count) :-
   Incr is Count + 1,
   ppbranch(Tree, Depth, Arrity, Incr).
 
-
 procbranch(Branch, _, Depth, 1) :-
   indent(Depth), write(Branch), nl.
 procbranch(Branch, Name, Depth, Arrity) :-

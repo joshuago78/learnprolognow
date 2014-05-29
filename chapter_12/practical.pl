@@ -96,7 +96,7 @@ step4test(Sentence, Filename) :-
 %   no
 
 
-test(InFile, OutFile) :-
+step5test(InFile, OutFile) :-
   open(InFile, read, InStream),
   open(OutFile, write, OutStream),
   process(InStream, OutStream),
@@ -108,11 +108,45 @@ process(InStream, _) :-
 process(InStream, OutStream) :-
   read(InStream, Sentence),
   write(OutStream, Sentence), nl(OutStream), nl(OutStream),
-  parse(Sentence, OutStream),
+  parse(OutStream, Sentence),
   process(InStream, OutStream).
 
-parse(Sentence, OutStream) :-
+parse(OutStream, Sentence) :-
   s(Tree, Sentence, []), !,  
   pptree(OutStream, Tree), !, nl(OutStream).
-parse(_, OutStream) :-
+parse(OutStream, _) :-
   write(OutStream, 'no'), nl(OutStream).
+
+
+
+% Step 6
+% Now (if you are in for some real Prolog hacking) try to write a module that
+% reads in sentences terminated by a full stop or a line break from a file, so
+% that you can give your testsuite as
+
+%   the  cow  under  the  table  shoots  . 
+    
+%   a  dead  woman  likes  he  .
+
+% instead of
+
+%   [the,cow,under,the,table,shoots]. 
+    
+%   [a,dead,woman,likes,he].
+
+:- use_module(reader).
+
+
+step6test(InFile, OutFile) :-
+  open(InFile, read, InStream),
+  open(OutFile, write, OutStream),
+  getlines(InStream, Lines),
+  parseandprint(OutStream, Lines),
+  close(InStream),
+  close(OutStream).
+
+parseandprint(_, []) :- !.
+parseandprint(Stream, [Line|Lines]) :-
+  write(Stream, Line), nl(Stream), nl(Stream),
+  parse(Stream, Line),
+  parseandprint(Stream, Lines).
