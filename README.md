@@ -2,8 +2,6 @@ I have been reading the online version of the book [Learn Prolog Now!](http://ww
 
 This is just a repo of my solutions to the exercises and practical sessions at the end of each chapter. I only include the solutions that involve writing Prolog code, not the concept exercises or traces.
 
-**Note:** Beware that I use the GNU Prolog compiler and sometimes make use of the built-in predicates, such as reverse/2, which will probably not work if you are using the SWI or SICStus compilers.  The GNU compiler is easy to install for Ubuntu users:
-
-    $ sudo apt-get install gprolog
-
 Feel free to peek at my solutions if you're stumped!  :)
+
+**Note:** Beware that while working through these exercises I used both the GNU Prolog compiler and the SWI-Prolog compiler, which are not always compatible. So some of these solutions will work on one but not the other. Sorry about that. I was working on multiple machines and didn't even notice the difference until the later chapters.

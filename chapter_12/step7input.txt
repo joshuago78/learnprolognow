@@ -1,0 +1,6 @@
+the cow under the table shoots.
+s(np(det(the),nom(noun(cow)),pp(prep(under),np(det(the),nom(noun(table))))),vp(verb(shoots))).
+a dead woman likes he.
+no.
+the cow under the table shoots him.
+s(np(det(the), nom(noun(cow)), pp(prep(under), np(det(the), nom(noun(table))))), vp(verb(shoots))).

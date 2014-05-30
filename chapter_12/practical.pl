@@ -150,3 +150,65 @@ parseandprint(Stream, [Line|Lines]) :-
   write(Stream, Line), nl(Stream), nl(Stream),
   parse(Stream, Line),
   parseandprint(Stream, Lines).
+
+
+
+% Step 7
+
+% Make the testsuite environment more sophisticated, by adding information to
+% the input file about the expected output (in this case, whether the
+% sentences has a parse or not). Then modify the program so that it checks
+% whether the expected output matches the obtained output.
+
+:- use_module(reader2).
+
+step7test(InFile, OutFile):-
+  open(InFile, read, InStream),
+  open(OutFile, write, OutStream),
+  getdata(InStream, Lines, Expected),
+  printresult(OutStream, Lines, Expected),
+  close(InStream),
+  close(OutStream).
+
+printresult(_, [], []) :- !.
+printresult(Stream, [Line|Lines], ['no'|Expected]) :-
+  s(Tree, Line, []), !,
+  write(Stream, 'Sentence: '), write(Stream, Line), nl(Stream),
+  write(Stream, 'Expected: no'), nl(Stream),
+  write(Stream, '->Result: '), write(Stream, Tree), nl(Stream), nl(Stream),
+  write(Stream, 'Error!'), nl(Stream),
+  pptree(Stream, Tree), !, nl(Stream),
+  write(Stream, '----------------------------------------------'), nl(Stream),
+  printresult(Stream, Lines, Expected).
+printresult(Stream, [Line|Lines], ['no'|Expected]) :-
+  !, write(Stream, 'Sentence: '), write(Stream, Line), nl(Stream), nl(Stream),
+  write(Stream, 'Expected: no'), nl(Stream),
+  write(Stream, '->Result: no'), nl(Stream), nl(Stream),
+  write(Stream, 'Match!'), nl(Stream), nl(Stream),
+  write(Stream, '----------------------------------------------'), nl(Stream),
+  printresult(Stream, Lines, Expected).
+printresult(Stream, [Line|Lines], [Tree|Expected]) :-
+  s(Tree, Line, []), !,
+  write(Stream, 'Sentence: '), write(Stream, Line), nl(Stream), nl(Stream),
+  write(Stream, 'Expected: '), write(Stream, Tree), nl(Stream),
+  write(Stream, '->Result: '), write(Stream, Tree), nl(Stream), nl(Stream),
+  write(Stream, 'Match!'), nl(Stream), nl(Stream),
+  pptree(Stream, Tree), !, nl(Stream),
+  write(Stream, '----------------------------------------------'), nl(Stream),
+  printresult(Stream, Lines, Expected).
+printresult(Stream, [Line|Lines], [Exp|Expected]) :-
+  s(Tree, Line, []), !,
+  write(Stream, 'Sentence: '), write(Stream, Line), nl(Stream), nl(Stream),
+  write(Stream, 'Expected: '), write(Stream, Exp), nl(Stream),
+  write(Stream, '->Result: '), write(Stream, Tree), nl(Stream), nl(Stream),
+  write(Stream, 'Error!'), nl(Stream), nl(Stream),
+  pptree(Stream, Tree), !, nl(Stream),
+  write(Stream, '----------------------------------------------'), nl(Stream),
+  printresult(Stream, Lines, Expected).
+printresult(Stream, [Line|Lines], [Exp|Expected]) :-
+  write(Stream, 'Sentence: '), write(Stream, Line), nl(Stream),
+  write(Stream, 'Expected: '), write(Stream, Exp), nl(Stream),
+  write(Stream, '->Result: no'), nl(Stream), nl(Stream),
+  write(Stream, 'Error!'), nl(Stream), nl(Stream),
+  write(Stream, '----------------------------------------------'), nl(Stream),
+  printresult(Stream, Lines, Expected).
